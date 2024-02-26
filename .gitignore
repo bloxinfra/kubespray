@@ -27,6 +27,7 @@ inventory/*
 !inventory/local
 !inventory/sample
 inventory/*/artifacts/
+!inventory/ovh
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
