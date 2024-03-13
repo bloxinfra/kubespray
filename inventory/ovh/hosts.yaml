@@ -13,6 +13,12 @@ all:
       ansible_host: 57.129.31.116
       ip: 192.168.2.144
       access_ip: 192.168.2.144
+    bn-1:
+      ansible_host: 141.95.98.197
+      ip: 192.168.0.2
+      access_ip: 192.168.0.2
+      node_labels:
+        node-type: "ethereum-clients"
   children:
     kube_control_plane:
       hosts:
@@ -23,6 +29,7 @@ all:
         node1:
         node2:
         node3:
+        bn-1:
     etcd:
       hosts:
         node1:
