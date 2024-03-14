@@ -11,6 +11,12 @@ pip install -r requirements.txt
 To run with the following command from the root of the kubespray directory:
 `ansible-playbook -i inventory/ovh/hosts.yaml cluster.yml -b -v --private-key=~/.ssh/key --user ubuntu`
 
+Run the Ansible disks playbook to configure the disks:
+
+NOTE: Make sure that only bare metal nodes are passed into the `Create /mnt/disks/kubernetes folder for worker nodes` task. 
+`ansible-playbook -i inventory/ovh/hosts.yaml disks.yml -b -v --private-key=~/.ssh/key --user ubuntu`
+
+
 ## Add ExternalIP to the node
 This is necessary because the CL/EL helm charts require the ExternalIP to be set on the node. This is not done automatically by kubespray.
 ```bash

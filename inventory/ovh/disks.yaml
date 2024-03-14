@@ -1,0 +1,38 @@
+- name: Format and mount sdb for control plane nodes
+  hosts: kube_control_plane
+  become: yes
+  tasks:
+    - name: Create a primary partition on /dev/sdb
+      community.general.parted:
+        device: /dev/sdb
+        number: 1
+        state: present
+        part_start: 0%
+        part_end: 100%
+        part_type: primary
+
+    - name: Format the new partition to ext4
+      community.general.filesystem:
+        fstype: ext4
+        dev: /dev/sdb1
+
+    - name: Ensure /mnt/disks is mounted
+      ansible.posix.mount:
+        path: /mnt/disks
+        src: /dev/sdb1
+        fstype: ext4
+        opts: defaults
+        state: mounted
+
+    - name: Create kubernetes directory in /mnt/disks
+      ansible.builtin.file:
+        path: /mnt/disks/kubernetes
+        state: directory
+- name: Create /mnt/disks/kubernetes folder for worker nodes
+  hosts: [bn-1, bn-2]
+  become: yes
+  tasks:
+    - name: Create kubernetes directory in /mnt/disks
+      ansible.builtin.file:
+        path: /mnt/disks/kubernetes
+        state: directory
